@@ -1,13 +1,17 @@
+import time
+import requests
 from cnmc_client import Client
-import time, json,requests
+from osconf import config_from_environment
 
-cnmc = Client(
-    environment='prod', key=$KEY,
-    secret=$SECRET
+
+config = config_from_environment('CNMC', ['consumer_key', 'consumer_secret', 'cups_test'])
+
+cnmc = Client(environment='prod', key=config['consumer_key'],
+    secret=config['consumer_secret']
 )
 while True:
     start_time = time.time()
-    cnmc_status = cnmc.fetch(cups=[$CUPS], file_type='SIPS2_PS_ELECTRICIDAD')
+    cnmc_status = cnmc.fetch(cups=[config['cups_test']], file_type='SIPS2_PS_ELECTRICIDAD')
     response_time = time.time() - start_time
 
     if cnmc_status["code"] == 200:

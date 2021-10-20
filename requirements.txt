@@ -1,0 +1,3 @@
+cnmc_client
+osconf
+requests
